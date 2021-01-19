@@ -6,6 +6,8 @@ import './todo.scss';
 
 function ToDo() {
 
+    // list[i].complete
+    // document.title = list[i].complete.size;
     const [list, setList] = useState([]);
 
     const addItem = (item) => {
@@ -36,33 +38,52 @@ function ToDo() {
         ];
 
         setList({ list });
-    
+
     }, []);
 
-return (
-    <>
-        <header>
-            <h2>
-                There are {list.length} Items To Complete
+    // This runs only when the list changes
+    useEffect(() => {
+        setTitle(list)
+    }, [list])
+
+    return (
+        <>
+            <header>
+                <h2>
+                    There are {list.length} Items To Complete
                 {/* There are {list.filter(item => !item.complete).length} Items To Complete */}
-          </h2>
-        </header>
+                </h2>
+            </header>
 
-        <section className="todo">
+            <section className="todo">
 
-            <div>
-                <TodoForm handleSubmit={addItem} />
-            </div>
+                <div>
+                    <TodoForm handleSubmit={addItem} />
+                </div>
 
-            <div>
-                <TodoList
-                    list={list}
-                    handleComplete={toggleComplete}
-                />
-            </div>
-        </section>
-    </>
-);
+                <div>
+                    <TodoList
+                        list={list}
+                        handleComplete={toggleComplete}
+                    />
+                </div>
+            </section>
+        </>
+    );
+}
+
+function setTitle(list) {
+
+    var completeCount = 0
+    for (let index = 0; index < list.length; index++) {
+        if (list[index].complete === true) {
+            completeCount++
+        }        
+    }
+
+    const incompleteCount = list.length - completeCount
+
+    document.title = "Incomplete: " + incompleteCount + " | Complete: " + completeCount
 }
 
 
