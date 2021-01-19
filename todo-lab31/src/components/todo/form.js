@@ -12,10 +12,6 @@ function TodoForm(props) {
         console.log(item);
     }, [item]);
 
-    // function handleInputChange(e) {
-    //     item[e.target.name] = e.target.value;
-    //     setItem(item);
-    // };
 
     const _submitForm = (e) => {
         e.preventDefault();
@@ -26,13 +22,6 @@ function TodoForm(props) {
         setItem({});
     }
 
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-    //     e.target.reset(); 
-    //     props.handleSubmit([item]); //send the form data up to the parent
-    //     const item = {}; // create item as empty object
-    //     setItem({item}); // Reset to the empty object 'item'
-    // };
 
     return (
         <>
@@ -54,7 +43,7 @@ function TodoForm(props) {
                     <span>Assigned To</span>
                     <input type="text" name="assignee" placeholder="Assigned To" onBlur={_changeInput} />
                 </label>
-                <button>Add Item</button>
+                <button type="submit">Add Item</button>
             </form>
         </>
     );

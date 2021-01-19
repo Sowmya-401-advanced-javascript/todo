@@ -4,8 +4,9 @@ function TodoList (props) {
 
 
   return (
+    
     <ul>
-      {/* {props.list.map(item => (
+      {props.list.map(item => (
         <li
           className={`complete-${item.complete.toString()}`}
           key={item._id}
@@ -14,10 +15,11 @@ function TodoList (props) {
             {item.text}
           </span>
         </li>
-      ))} */}
+      ))}
     </ul>
   );
 }
+
 
 
 export default TodoList;
