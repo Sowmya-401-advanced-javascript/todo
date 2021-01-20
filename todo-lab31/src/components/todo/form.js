@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import useForm from './form-hook';
 
 function TodoForm(props) {
     const [item, setItem] = useState({text: '', difficulty: 1, assignee: ''});
+    const [_changeInput, _submitForm, formData] = useForm(submit)
 
-    const _changeInput = (e) => {
-        setItem({...item, [e.target.name]: e.target.value})
+    function submit(todo) {
+        props.handleSubmit(todo)
     }
 
     // This runs only when the item changes
     useEffect(() => {
         console.log(item);
     }, [item]);
-
-
-    const _submitForm = (e) => {
-        e.preventDefault();
-        e.target.reset(); 
-        let send = (item.text && item.difficulty && item.assignee) ? true : false;
-        send && props.handleSubmit(item);
-        // item.text && item.difficulty && item.assignee && props.handleSubmit(item);
-        setItem({});
-    }
-
 
     return (
         <>

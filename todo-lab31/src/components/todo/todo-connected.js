@@ -3,64 +3,61 @@ import TodoForm from './form.js';
 import TodoList from './list.js';
 
 import './todo.scss';
+import useAjax from './useAjax.js';
 
-const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
-
+const todoAPI = 'https://basic-api-server-401.herokuapp.com/todo';
 
 const ToDo = () => {
 
   const [list, setList] = useState([]);
+  const [makeApiCall, retrievedData] = useAjax(updateList)
+
+  function updateList(method) {
+    if (method === 'post') {
+      addSavedItemToList(retrievedData)
+    } else if (method === 'put') {
+      replaceUpdatedItemInList(retrievedData)
+    } else if (method === 'get') {
+      processRetrievedData(retrievedData)
+    }
+  }
 
   const _addItem = (item) => {
     item.due = new Date();
-    fetch(todoAPI, {
-      method: 'post',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item)
-    })
-      .then(response => response.json())
-      .then(savedItem => {
-        setList([...list, savedItem])
-      })
-      .catch(console.error);
+    makeApiCall(todoAPI, 'post', JSON.stringify(item), addSavedItemToList)
   };
+
+  function addSavedItemToList(savedItem) {
+    setList([...list, savedItem])
+  }
 
   const _toggleComplete = id => {
 
     let item = list.filter(i => i._id === id)[0] || {};
 
-    if (item._id) {
-
-      item.complete = !item.complete;
-
-      let url = `${todoAPI}/${id}`;
-
-      fetch(url, {
-        method: 'put',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      })
-        .then(response => response.json())
-        .then(savedItem => {
-          setList(list.map(listItem => listItem._id === item._id ? savedItem : listItem));
-        })
-        .catch(console.error);
+    if (!item._id) {
+      return
     }
+
+    item.complete = !item.complete;
+
+    let url = `${todoAPI}/${id}`;
+
+    makeApiCall(url, 'put', JSON.stringify(item), replaceUpdatedItemInList)
   };
+
+  function replaceUpdatedItemInList(updatedItem) {
+    setList(list.map(listItem => 
+      listItem._id === updatedItem._id ? updatedItem : listItem));
+  }
 
   const _getTodoItems = () => {
-    fetch(todoAPI, {
-      method: 'get',
-      mode: 'cors',
-    })
-      .then(data => data.json())
-      .then(data => setList(data.results))
-      .catch(console.error);
+    makeApiCall(todoAPI, 'get', null, processRetrievedData)
   };
+
+  function processRetrievedData(retrievedData) {
+    setList(retrievedData.results)
+  }
 
   useEffect(_getTodoItems, []);
 
