@@ -19,7 +19,6 @@ const ToDo = () => {
     { _id: 5, complete: false, text: 'Take a Nap', difficulty: 1, assignee: 'Person B' },
   ]);
 
-
   function updateList(method) {
     if (method === 'post') {
       addSavedItemToList(retrievedData)
@@ -78,7 +77,7 @@ const ToDo = () => {
     document.title = `To Do List: (${count})`;
   }, [count]);
 
-  return (
+return (
     <>
       <header>
         <h2>
