@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import './todo.scss';
-import Pagination from "react-js-pagination";
 
 function ToDo() {
 
-
-    const [activePage, setActivepage] = useState(3);
 
     const addItem = (item) => {
         item._id = Math.random();
@@ -25,11 +22,6 @@ function ToDo() {
         }
     };
 
-
-    handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        setActivepage({ activePage: pageNumber });
-    }
 
     return (
         <>
@@ -52,13 +44,6 @@ function ToDo() {
                         handleComplete={toggleComplete}
                     />
                 </div>
-                <Pagination
-                    activePage={activePage}
-                    itemsCountPerPage={10}
-                    totalItemsCount={450}
-                    pageRangeDisplayed={5}
-                    onChange={handlePageChange.bind}
-                />
             </section>
         </>
     );
