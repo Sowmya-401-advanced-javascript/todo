@@ -23,7 +23,7 @@ const useAjax = () => {
     //         .then(responseJson => {
     //             console.log("responseJson", responseJson);
             setRetrievedData(data)
-            callback()
+            callback(method)
     //     })
     // .catch(console.error);
     }
