@@ -33,7 +33,7 @@ const ToDo = () => {
   const _addItem = (item) => {
     item.complete = false;
     console.log(item);
-    makeApiCall(todoAPI, 'post', { body: JSON.stringify(item), _getTodoItems })
+    makeApiCall(todoAPI, 'post', { body: JSON.stringify(item)}, _getTodoItems )
   };
 
   function addSavedItemToList(savedItem) {
