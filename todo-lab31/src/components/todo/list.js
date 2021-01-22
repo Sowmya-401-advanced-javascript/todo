@@ -15,7 +15,7 @@ function TodoList (props) {
     setCurrentPage(currentPage--)
   }
 
-  useEffect(/* render again */, [currentPage])
+  // useEffect(/* render again */, [currentPage])
 
   return (
     <div>
