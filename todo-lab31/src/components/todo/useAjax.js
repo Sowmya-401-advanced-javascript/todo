@@ -4,23 +4,31 @@ const useAjax = () => {
 
     const [retrievedData, setRetrievedData] = useState(null)
 
-    function makeApiCall(apiUrl, method, request, callback) {
-        fetch(apiUrl, {
+    async function makeApiCall(apiUrl, method, request, callback) {
+        console.log("apiUrl", apiUrl);
+        console.log("method", method);
+        console.log("request", request);
+
+        const fetchItems = await fetch(apiUrl, {
             method: method,
-            mode: 'cors',
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
             body: request
-          })
-            .then(response => response.json())
-            .then(responseJson => {
-                setRetrievedData(responseJson)
-                callback(method)
-            })
-            .catch(console.error);
+        })
+        console.log("fetchItems", fetchItems);
+        const data = fetchItems.data;
+        console.log("Data", data);
+
+
+    //         .then(response => response.json())
+        
+    //         .then(responseJson => {
+    //             console.log("responseJson", responseJson);
+            setRetrievedData(data)
+            callback(method)
+    //     })
+    // .catch(console.error);
     }
 
-    return [makeApiCall, retrievedData]
+return [makeApiCall, retrievedData]
 }
 
 export default useAjax
